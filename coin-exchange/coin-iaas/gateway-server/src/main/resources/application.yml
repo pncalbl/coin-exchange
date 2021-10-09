@@ -24,7 +24,10 @@ spring:
             - Path=/product
     # 通过网关来完成对两种维度的限流: 网关维度 + API 分组
     sentinel:
+      filter:
+        enabled: false
       transport:
+        port: 8719
         dashboard: sentinel-server:8858
       datasource:
 #        ds1.file:
@@ -44,3 +47,6 @@ spring:
           serverAddr: nacos-server:8848
           dataId: api-group
           ruleType: gw_api_group
+
+# 我们演示了 sentinel-dashboard 的规则定义, 而且规则定义好了后, 我们网关能立马感知到(实时生效)
+# 而 Nacos 无法感知, 只要重启 sentinel-dashboard, 就会丢失现有规则, 必须手动在 Nacos 页面, 持久化.

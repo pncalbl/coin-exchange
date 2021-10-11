@@ -50,3 +50,8 @@ spring:
 
 # 我们演示了 sentinel-dashboard 的规则定义, 而且规则定义好了后, 我们网关能立马感知到(实时生效)
 # 而 Nacos 无法感知, 只要重启 sentinel-dashboard, 就会丢失现有规则, 必须手动在 Nacos 页面, 持久化.
+
+  redis:
+    password: pncalbl123
+    host: redis-server
+    port: 6380

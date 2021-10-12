@@ -56,7 +56,13 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 				.scopes("all")   // 第三方客户端的授权范围
 				.authorizedGrantTypes("password", "refresh_token")   // 授权类型
 				.accessTokenValiditySeconds(7 * 24 * 3600)      // token 的有效期为 1周
-				.refreshTokenValiditySeconds(30 * 24 * 3600);    // refreshToken 的有效期为 1月
+				.refreshTokenValiditySeconds(30 * 24 * 3600)    // refreshToken 的有效期为 1月
+				.and()  // 新增一个内部客户端
+				.withClient("inside-app")
+				.secret(passwordEncoder.encode("inside-secret"))
+				.authorizedGrantTypes("client_credentials")
+				.scopes("all")
+				.accessTokenValiditySeconds(7 * 24 * 3600);
 		super.configure(clients);
 	}
 

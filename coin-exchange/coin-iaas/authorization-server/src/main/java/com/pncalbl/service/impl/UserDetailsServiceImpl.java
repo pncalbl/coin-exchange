@@ -3,6 +3,8 @@ package com.pncalbl.service.impl;
 import com.pncalbl.constant.LoginConstant;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
+import org.springframework.dao.IncorrectResultSizeDataAccessException;
 import org.springframework.jdbc.IncorrectResultSetColumnCountException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.authentication.AuthenticationServiceException;
@@ -56,8 +58,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 				default:
 					throw new AuthenticationServiceException("暂不支持的登录方式: " + loginType);
 			}
-		} catch (IncorrectResultSetColumnCountException e) {    // 我们的用户不存在
-			throw new UsernameNotFoundException("用户名: " + username + " 不存在!");
+		} catch (IncorrectResultSizeDataAccessException e) {    // 我们的用户不存在
+			throw new UsernameNotFoundException("用户名" + username + "不存在!");
 		}
 		return userDetails;
 	}
@@ -73,7 +75,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 		// 1. 使用用户名查询用户
 		return jdbcTemplate.queryForObject(LoginConstant.QUERY_ADMIN_SQL, (resultSet, i) -> {
 			if (resultSet.wasNull()) {
-				throw new UsernameNotFoundException("用户名: " + username + " 不存在!");
+				throw new UsernameNotFoundException("用户名" + username + "不存在!");
 			}
 			long id = resultSet.getLong("id");
 			String password = resultSet.getString("password");

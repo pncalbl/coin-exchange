@@ -7,6 +7,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.dao.IncorrectResultSizeDataAccessException;
 import org.springframework.jdbc.IncorrectResultSetColumnCountException;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -18,6 +19,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -66,7 +70,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
 
 	/**
-	 * 后台人员的登录
+	 * 后台管理人员的登录
 	 *
 	 * @param username 用户名
 	 * @return 用户详细信息
@@ -119,13 +123,30 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 	}
 
 	/**
-	 * 会员的登录
+	 * 普通会员用户的登录
 	 *
 	 * @param username 用户名
 	 * @return 用户详细信息
 	 */
 	private UserDetails loadMemberUserByUsername(String username) {
-		return null;
+		return jdbcTemplate.queryForObject(LoginConstant.QUERY_MEMBER_SQL, (resultSet, rowNum) -> {
+			if (resultSet.wasNull()) {
+				throw new UsernameNotFoundException("用户名" + username + "不存在!");
+			}
+			long id = resultSet.getLong("id");
+			String password = resultSet.getString("password");
+			int status = resultSet.getInt("status");
+			// 3. 封装成一个 UserDetails 对象, 并返回
+			return new User(
+					String.valueOf(id), // 使用 id -> username
+					password,
+					status == 1,
+					true,
+					true,
+					true,
+					Collections.singletonList(new SimpleGrantedAuthority("ROLE_USER"))    // 2. 查询用户对应的权限
+			);
+		}, username, username);
 	}
 
 }

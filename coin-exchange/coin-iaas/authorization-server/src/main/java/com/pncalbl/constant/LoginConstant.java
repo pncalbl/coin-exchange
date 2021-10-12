@@ -13,18 +13,18 @@ public class LoginConstant {
 	 */
 	public static final String ADMIN_TYPE = "admin_type";
 	/**
-	 * 普通用户
+	 * 普通会员用户
 	 */
 	public static final String MEMBER_TYPE = "member_type";
 
 	/**
-	 * 通过用户名查询系统用户
+	 * 通过用户名查询后台管理人员
 	 */
 	public static final String QUERY_ADMIN_SQL =
 			"SELECT `id`,`username`,`password`,`status` FROM sys_user WHERE username = ?";
 
 	/**
-	 * 查询用户的角色 code
+	 * 查询后台管理人员的角色 code
 	 */
 	public static final String QUERY_ROLE_CODE_SQL =
 			"SELECT `code` FROM sys_role LEFT JOIN sys_user_role " +
@@ -32,14 +32,14 @@ public class LoginConstant {
 
 
 	/**
-	 * 查询管理员的所有权限
+	 * 查询超级管理员的所有权限
 	 */
 	public static final String QUERY_ALL_PERMISSIONS =
 			"SELECT `name` FROM sys_privilege";
 
 
 	/**
-	 * 查询普通用户的权限
+	 * 查询后台管理人员的权限
 	 */
 	public static final String QUERY_PERMISSIONS_SQL =
 			"SELECT `name` FROM sys_privilege LEFT JOIN sys_role_privilege ON " +
@@ -50,4 +50,11 @@ public class LoginConstant {
 	 * 超级管理员的 roleCode
 	 */
 	public static final String ADMIN_ROLE_CODE = "ROLE_ADMIN";
+
+	/**
+	 * 普通会员用户的查询
+	 */
+	public static final String QUERY_MEMBER_SQL =
+			"SELECT `id`, `password`, `status` FROM `user` " +
+					"WHERE mobile = ? or email = ?";
 }

@@ -35,14 +35,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		return super.authenticationManager();
 	}
 
-	@Bean
-	public UserDetailsService userDetailsService() {
-		InMemoryUserDetailsManager inMemoryUserDetailsManager = new InMemoryUserDetailsManager();
-		User user = new User("admin", "123456",
-				Collections.singletonList(new SimpleGrantedAuthority("Role_Admin")));
-		inMemoryUserDetailsManager.createUser(user);
-		return inMemoryUserDetailsManager;
-	}
+	// @Bean
+	// public UserDetailsService userDetailsService() {
+	// 	InMemoryUserDetailsManager inMemoryUserDetailsManager = new InMemoryUserDetailsManager();
+	// 	User user = new User("admin", "123456",
+	// 			Collections.singletonList(new SimpleGrantedAuthority("Role_Admin")));
+	// 	inMemoryUserDetailsManager.createUser(user);
+	// 	return inMemoryUserDetailsManager;
+	// }
 
 	/**
 	 * 密码加密

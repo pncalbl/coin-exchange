@@ -3,11 +3,8 @@ package com.pncalbl.service.impl;
 import com.pncalbl.constant.LoginConstant;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataAccessException;
 import org.springframework.dao.IncorrectResultSizeDataAccessException;
-import org.springframework.jdbc.IncorrectResultSetColumnCountException;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.RowMapper;
 import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -19,9 +16,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -52,6 +46,10 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 		UserDetails userDetails;
 
 		try {
+			String grant_type = requestAttributes.getRequest().getParameter("grant_type");
+			if (LoginConstant.REFRESH_TYPE.equals(grant_type)) {    // 当使用 refresh_token 方式授权时
+				username = adjustUsername(username, loginType);    // 纠正 username 为真正的 username , 之前为 id
+			}
 			switch (loginType) {
 				case LoginConstant.ADMIN_TYPE:
 					userDetails = loadSysUserByUsername(username);
@@ -66,6 +64,23 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 			throw new UsernameNotFoundException("用户名" + username + "不存在!");
 		}
 		return userDetails;
+	}
+
+	/**
+	 * 纠正用户的名称
+	 *
+	 * @param username  用户 id
+	 * @param loginType 登录类型
+	 * @return 纠正后的用户名
+	 */
+	private String adjustUsername(String username, String loginType) {
+		if (LoginConstant.ADMIN_TYPE.equals(loginType)) {
+			return jdbcTemplate.queryForObject(LoginConstant.QUERY_ADMIN_USER_WITH_ID, String.class, username);
+		}
+		if (LoginConstant.MEMBER_TYPE.equals(loginType)) {
+			return jdbcTemplate.queryForObject(LoginConstant.QUERY_MEMBER_USER_WITH_ID, String.class, username);
+		}
+		return username;
 	}
 
 

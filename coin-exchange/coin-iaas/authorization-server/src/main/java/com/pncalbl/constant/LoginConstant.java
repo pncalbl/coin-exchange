@@ -57,4 +57,21 @@ public class LoginConstant {
 	public static final String QUERY_MEMBER_SQL =
 			"SELECT `id`, `password`, `status` FROM `user` " +
 					"WHERE mobile = ? or email = ?";
+
+	/**
+	 * refresh_token 类型
+	 */
+	public static final String REFRESH_TYPE = "refresh_token";
+
+	/**
+	 * 使用后台管理人员的 id, 查询对应的用户名
+	 */
+	public static final String QUERY_ADMIN_USER_WITH_ID =
+			"SELECT `username` FROM sys_user WHERE id = ? ";
+
+	/**
+	 * 使用普通会员用户的 id, 查询对应的用户名
+	 */
+	public static final String QUERY_MEMBER_USER_WITH_ID =
+			"SELECT `mobile` FROM user WHERE id = ? ";
 }

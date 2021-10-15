@@ -40,7 +40,7 @@
 		<okhttp.version>3.11.0</okhttp.version>
 		<okio.version>1.15.0</okio.version>
 		<hutool.version>5.4.4</hutool.version>
-		<swagger2.version>3.0.0</swagger2.version>
+		<swagger2.version>2.9.2</swagger2.version>
 		
 	</properties>
 	

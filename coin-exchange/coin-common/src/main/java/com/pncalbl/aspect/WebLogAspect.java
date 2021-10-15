@@ -2,8 +2,10 @@ package com.pncalbl.aspect;
 
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.core.util.URLUtil;
+import com.alibaba.fastjson.JSON;
 import com.pncalbl.model.WebLog;
 import io.swagger.annotations.ApiOperation;
+import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -30,14 +32,11 @@ import java.util.Objects;
  * @description
  **/
 
+@Slf4j
 @Aspect
 @Component
 @Order(1)
 public class WebLogAspect {
-	/**
-	 * 日志记录
-	 * 环绕通知: 方法执行之前, 之后
-	 */
 
 	/**
 	 * 1. 定义切入点
@@ -84,6 +83,7 @@ public class WebLogAspect {
 		webLog.setMethod(targetClassName + "." + method.getName());
 		webLog.setParameter(getMethodParameter(method, proceedingJoinPoint.getArgs()));  // {"key_参数名称": "value_参数的值"}
 		webLog.setResult(result);
+		log.info(JSON.toJSONString(webLog, true));
 		return result;
 	}
 

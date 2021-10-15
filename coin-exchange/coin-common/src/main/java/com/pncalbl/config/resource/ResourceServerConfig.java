@@ -23,6 +23,7 @@ import java.nio.charset.StandardCharsets;
  * @description
  **/
 
+@Slf4j
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 @EnableResourceServer
 @Configuration
@@ -70,7 +71,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 			byte[] bytes = FileCopyUtils.copyToByteArray(classPathResource.getInputStream());
 			publicKey = new String(bytes, StandardCharsets.UTF_8);
 		} catch (Exception e) {
-			e.printStackTrace();
+			log.info("读取公钥失败");
 		}
 		tokenConverter.setVerifierKey(publicKey);
 		return tokenConverter;

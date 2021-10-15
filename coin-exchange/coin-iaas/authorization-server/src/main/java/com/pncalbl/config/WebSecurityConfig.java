@@ -5,15 +5,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
-
-import java.util.Collections;
 
 /**
  * @author pncalbl
@@ -36,15 +29,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		return super.authenticationManager();
 	}
 
-	// @Bean
-	// public UserDetailsService userDetailsService() {
-	// 	InMemoryUserDetailsManager inMemoryUserDetailsManager = new InMemoryUserDetailsManager();
-	// 	User user = new User("admin", "123456",
-	// 			Collections.singletonList(new SimpleGrantedAuthority("Role_Admin")));
-	// 	inMemoryUserDetailsManager.createUser(user);
-	// 	return inMemoryUserDetailsManager;
-	// }
-
 	/**
 	 * 密码加密
 	 *
@@ -55,10 +39,4 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		return new BCryptPasswordEncoder();
 	}
 
-	// 测试加密
-	// public static void main(String[] args) {
-	// 	BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-	// 	String encode = passwordEncoder.encode("123456");
-	// 	System.out.println(encode);
-	// }
 }

@@ -11,4 +11,11 @@ import com.pncalbl.domain.SysRole;
 *   ${TAGES}
 **/
 public interface SysRoleMapper extends BaseMapper<SysRole> {
+
+	/**
+	 * 获取用户角色 code
+	 * @param userId 用户 id
+	 * @return 角色 code
+	 */
+	String getUserRoleCode(Long userId);
 }

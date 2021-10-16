@@ -18,6 +18,8 @@ spring:
           uri: lb://admin-service # 转发到那个目的地
           predicates:
             - Path=/admin/**
+          filters:
+            - StripPrefix=1 # 当前端访问 /admin/login -> login 将 admin 自动去掉
         - id: test_router
           uri: https://www.aliyun.com
           predicates:
@@ -30,9 +32,9 @@ spring:
         port: 8719
         dashboard: sentinel-server:8858
       datasource:
-#        ds1.file:
-#          file: classpath:gw-flow.json  # 网关 + API 分组的限流
-#          ruleType: gw_flow
+        #        ds1.file:
+        #          file: classpath:gw-flow.json  # 网关 + API 分组的限流
+        #          ruleType: gw_flow
         # com.alibaba.csp.sentinel.datasource.nacos.NacosDataSource
         # 使用 Nacos 持久化时我们的 sentinel 数据时, 需要添加 nacos-datasource 的依赖
         ds1.nacos:
@@ -40,16 +42,16 @@ spring:
           dataId: gw-flow
           ruleType: gw_flow
 
-#        ds2.file:
-#          file: classpath:api-group.json
-#          ruleType: gw_api_group
+        #        ds2.file:
+        #          file: classpath:api-group.json
+        #          ruleType: gw_api_group
         ds2.nacos:
           serverAddr: nacos-server:8848
           dataId: api-group
           ruleType: gw_api_group
 
-# 我们演示了 sentinel-dashboard 的规则定义, 而且规则定义好了后, 我们网关能立马感知到(实时生效)
-# 而 Nacos 无法感知, 只要重启 sentinel-dashboard, 就会丢失现有规则, 必须手动在 Nacos 页面, 持久化.
+  # 我们演示了 sentinel-dashboard 的规则定义, 而且规则定义好了后, 我们网关能立马感知到(实时生效)
+  # 而 Nacos 无法感知, 只要重启 sentinel-dashboard, 就会丢失现有规则, 必须手动在 Nacos 页面, 持久化.
 
   redis:
     password: pncalbl123

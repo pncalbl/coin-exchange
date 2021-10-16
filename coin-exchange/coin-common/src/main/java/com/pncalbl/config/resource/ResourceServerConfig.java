@@ -34,13 +34,14 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 				.sessionManagement().disable()
 				.authorizeRequests()
 				.antMatchers(
+						"/login",           // 登录
 						"/v2/api-docs",
-						"/swagger-resources/configuration/ui",//用来获取支持的动作
-						"/swagger-resources",//用来获取api-docs的URI
-						"/swagger-resources/configuration/security",//安全选项
+						"/swagger-resources/configuration/ui", // 用来获取支持的动作
+						"/swagger-resources", // 用来获取 api-docs 的 URI
+						"/swagger-resources/configuration/security", // 安全选项
 						"/webjars/**",
-						"/swagger-ui.html").permitAll()  // 放行
-				.antMatchers("/**").authenticated() // 需要登录
+						"/swagger-ui.html").permitAll()         // 放行
+				.antMatchers("/**").authenticated()// 需要登录
 				.and().headers().cacheControl();
 	}
 

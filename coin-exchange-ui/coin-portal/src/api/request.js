@@ -41,6 +41,7 @@ service.interceptors.request.use(config => {
   }
   // Do something before request is sent
   if (store.getters.token) {
+    console.log(store.getters.token);
     config.headers['Authorization'] = store.getters.token // 让每个请求携带token-- ['X-Token']为自定义key 请根据实际情况自行修改
   }
 

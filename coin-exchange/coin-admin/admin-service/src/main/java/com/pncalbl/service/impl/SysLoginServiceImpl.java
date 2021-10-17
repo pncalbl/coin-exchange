@@ -14,6 +14,7 @@ import com.pncalbl.service.SysMenuService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -22,6 +23,7 @@ import org.springframework.security.jwt.JwtHelper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 /**
@@ -38,6 +40,7 @@ public class SysLoginServiceImpl implements SysLoginService {
 
 	private final OAuth2FeignClient oAuth2FeignClient;
 	private final SysMenuService sysMenuService;
+	private final StringRedisTemplate redisTemplate;
 
 	@Value("${basic.token:Basic Y29pbi1hcGk6Y29pbi1zZWNyZXQ=}")
 	private String basicToken;
@@ -76,6 +79,9 @@ public class SysLoginServiceImpl implements SysLoginService {
 				.map(authorityJson -> new SimpleGrantedAuthority(authorityJson.toString()))
 				.collect(Collectors.toList());
 
-		return new LoginResult(token, menus, authorities);
+		// 1 将该token 存储在redis 里面，配置我们的网关做jwt验证的操作
+		redisTemplate.opsForValue().set(token, "", jwtToken.getExpiresIn(), TimeUnit.SECONDS);
+		//2 我们返回给前端的Token 数据，少一个 bearer：
+		return new LoginResult(jwtToken.getTokenType() + " " + token, menus, authorities);
 	}
 }

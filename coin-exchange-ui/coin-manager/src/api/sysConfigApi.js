@@ -1,71 +1,70 @@
-import request from '@/utils/request'
-import {formUtils} from '@/utils/formUtil'
+import request from "@/utils/request";
+import { formUtils } from "@/utils/formUtil";
 
 export const sysConfigApi = {
-
   /**
    * 获取功能权限列表
    * @param current
    * @param size
    */
   getPowerList(current, size) {
-    const params = {}
-    params.current = current
-    params.size = size
+    const params = {};
+    params.current = current;
+    params.size = size;
     return request({
-      url: '/admin/privileges',
-      method: 'get',
+      url: "/admin/privileges",
+      method: "get",
       params: params
-    })
+    });
   },
 
   getUsers(form, current, size) {
-    const params = {}
+    const params = {};
     for (const item in form) {
       if (form[item]) {
-        params[item] = form[item]
+        params[item] = form[item];
       }
     }
-    params.current = current
-    params.size = size
+    params.current = current;
+    params.size = size;
     return request({
-      url: '/admin/users',
-      method: 'get',
+      url: "/admin/users",
+      method: "get",
       params: params
-    })
+    });
   },
 
   /**
    * 新建员工
    */
   createEmployee(data) {
-    console.log('员工状态：' + data.status)
+    console.log("员工状态：" + data.status);
 
     return request({
-      url: '/admin/users',
-      method: 'post',
+      url: "/admin/users",
+      method: "post",
       data: data
-    })
+    });
   },
   /**
    * 更新员工
    */
   updateEmployee(data) {
     return request({
-      url: '/admin/users',
-      method: 'patch',
+      url: "/admin/users",
+      method: "patch",
       data: data
-    })
+    });
   },
   /**
    * 删除员工
    */
   deleteEmployee(ids) {
     return request({
-      url: '/admin/users/delete',
-      method: 'post',
+      url: "/admin/users/delete",
+      method: "post",
       data: ids
-    })
+    });
   },
 
   // 角色相关
@@ -76,19 +75,19 @@ export const sysConfigApi = {
    * @param size
    */
   getRoleList(form, current, size) {
-    const params = {}
+    const params = {};
     for (const item in form) {
       if (form[item]) {
-        params[item] = form[item]
+        params[item] = form[item];
       }
     }
-    params.current = current
-    params.size = size
+    params.current = current;
+    params.size = size;
     return request({
-      url: '/admin/roles',
-      method: 'get',
+      url: "/admin/roles",
+      method: "get",
       params: params
-    })
+    });
   },
 
   /**
@@ -96,10 +95,10 @@ export const sysConfigApi = {
    */
   createRole(data) {
     return request({
-      url: '/admin/roles',
-      method: 'post',
+      url: "/admin/roles",
+      method: "post",
       data: data
-    })
+    });
   },
 
   /**
@@ -107,10 +106,10 @@ export const sysConfigApi = {
    */
   deleteRole(ids) {
     return request({
-      url: '/admin/roles/delete',
-      method: 'post',
+      url: "/admin/roles/delete",
+      method: "post",
       data: ids
-    })
+    });
   },
 
   /**
@@ -118,10 +117,10 @@ export const sysConfigApi = {
    */
   updateRole(data) {
     return request({
-      url: '/admin/users/update',
-      method: 'put',
+      url: "/admin/users/update",
+      method: "put",
       data: data
-    })
+    });
   },
 
   /**
@@ -130,12 +129,12 @@ export const sysConfigApi = {
    */
   getRolePrivileges(id) {
     return request({
-      url: '/admin/roles_privileges',
-      method: 'get',
+      url: "/admin/roles_privileges",
+      method: "get",
       params: {
         roleId: id
       }
-    })
+    });
   },
 
   /**
@@ -145,13 +144,13 @@ export const sysConfigApi = {
    */
   postRolePrivileges(id, privilegeIds) {
     return request({
-      url: '/admin/grant_privileges',
-      method: 'post',
+      url: "/admin/grant_privileges",
+      method: "post",
       data: {
         roleId: id,
         privilegeIds
       }
-    })
+    });
   },
 
   /**
@@ -159,15 +158,14 @@ export const sysConfigApi = {
    * @param id
    */
   getSysUserLog(form, current, size) {
-    let params = {}
+    let params = {};
     formUtils.formDateRange(params, form);
-    params.current = current
-    params.size = size
+    params.current = current;
+    params.size = size;
     return request({
-      url: '/admin/sysUserLog',
-      method: 'get',
+      url: "/admin/sysUserLog",
+      method: "get",
       params: params
-    })
+    });
   }
-}
-
+};

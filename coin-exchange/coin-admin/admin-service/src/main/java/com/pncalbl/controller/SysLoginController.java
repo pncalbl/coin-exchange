@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-@Api(value = "登录的控制器")
+@Api(value = "后台: 登录管理")
 public class SysLoginController {
 
 	private final SysLoginService loginService;

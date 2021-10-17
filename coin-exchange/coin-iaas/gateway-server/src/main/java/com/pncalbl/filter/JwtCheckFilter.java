@@ -1,6 +1,7 @@
 package com.pncalbl.filter;
 
 import com.alibaba.fastjson.JSONObject;
+import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang.StringUtils;
 import org.apache.http.HttpHeaders;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,10 +29,12 @@ import java.util.Set;
  **/
 
 @Component
+@RequiredArgsConstructor
 public class JwtCheckFilter implements GlobalFilter, Ordered {
 
-	@Autowired
-	private StringRedisTemplate redisTemplate;
+	private final StringRedisTemplate redisTemplate;
+
+
 
 	@Value("${no.require.urls:/admin/login}")
 	private Set<String> noRequireTokenUrls;
@@ -55,6 +58,7 @@ public class JwtCheckFilter implements GlobalFilter, Ordered {
 		if (StringUtils.isEmpty(token)) {
 			return buildNoAuthorizationResult(exchange);
 		}
+
 		Boolean hasKey = redisTemplate.hasKey(token);
 		if (hasKey != null && hasKey) {
 			return chain.filter(exchange);  // token 有效, 直接放行

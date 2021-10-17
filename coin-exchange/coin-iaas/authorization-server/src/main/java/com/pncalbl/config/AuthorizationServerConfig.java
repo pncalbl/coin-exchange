@@ -1,10 +1,12 @@
 package com.pncalbl.config;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
 // import org.springframework.data.redis.connection.RedisConnectionFactory;
+import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -25,22 +27,15 @@ import org.springframework.security.oauth2.provider.token.store.redis.RedisToken
  * @description
  **/
 
+@RequiredArgsConstructor
 @EnableAuthorizationServer  // 开启授权服务器功能
 @Configuration
 public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdapter {
 
-	@Autowired
-	private PasswordEncoder passwordEncoder;
+	private final PasswordEncoder passwordEncoder;
+	private final AuthenticationManager authenticationManager;
+	private final UserDetailsService userDetailsService;
 
-	@Autowired
-	private AuthenticationManager authenticationManager;
-
-	@Qualifier("userDetailsServiceImpl")
-	@Autowired
-	private UserDetailsService userDetailsService;
-
-	// @Autowired
-	// private RedisConnectionFactory redisConnectionFactory;
 
 	/**
 	 * 配置第三方客户端
@@ -76,7 +71,6 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 	public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
 		endpoints.authenticationManager(authenticationManager)
 				.userDetailsService(userDetailsService)
-				// .tokenStore(redisTokenStore()); // Redis 存储 token
 				.tokenStore(jwtTokenStore())      // JWT 存储 token
 				.tokenEnhancer(jwtAccessTokenConverter());
 
@@ -98,7 +92,4 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 		return tokenConverter;
 	}
 
-	// public TokenStore redisTokenStore() {
-	// 	return new RedisTokenStore(redisConnectionFactory);
-	// }
 }

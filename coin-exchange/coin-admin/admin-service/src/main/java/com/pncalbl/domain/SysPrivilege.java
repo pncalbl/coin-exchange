@@ -88,7 +88,7 @@ public class SysPrivilege {
 	/**
 	 * 修改时间
 	 */
-	@TableField(value = "last_update_time", fill = FieldFill.UPDATE)
+	@TableField(value = "last_update_time", fill = FieldFill.INSERT_UPDATE)
 	@ApiModelProperty(value = "修改时间")
 	private Date lastUpdateTime;
 }

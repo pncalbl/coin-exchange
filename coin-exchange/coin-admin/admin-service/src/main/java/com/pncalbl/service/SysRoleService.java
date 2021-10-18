@@ -1,5 +1,6 @@
 package com.pncalbl.service;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.pncalbl.domain.SysRole;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -18,4 +19,13 @@ public interface SysRoleService extends IService<SysRole> {
 	 * @return 是否为超级管理员
 	 */
 	boolean isSuperAdmin(Long userId);
+
+	/**
+	 * 根据使用角色的名称分页角色查询
+	 *
+	 * @param page 分页对象
+	 * @param name 角色名称
+	 * @return 分页角色对象
+	 */
+	Page<SysRole> findByPage(Page<SysRole> page, String name);
 }

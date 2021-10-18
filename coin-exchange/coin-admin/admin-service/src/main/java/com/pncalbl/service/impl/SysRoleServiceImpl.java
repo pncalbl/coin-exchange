@@ -1,5 +1,7 @@
 package com.pncalbl.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.pncalbl.domain.SysRole;
 import com.pncalbl.mapper.SysRoleMapper;
@@ -32,5 +34,21 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
 		// 用户的 id -> 用户的角色 -> 角色 code
 		String roleCode = sysRoleMapper.getUserRoleCode(userId);
 		return !StringUtils.isEmpty(roleCode) && roleCode.equals("ROLE_ADMIN");
+	}
+
+	/**
+	 * 根据使用角色的名称分页角色查询
+	 *
+	 * @param page 分页对象
+	 * @param name 角色名称
+	 * @return 分页角色对象
+	 */
+	@Override
+	public Page<SysRole> findByPage(Page<SysRole> page, String name) {
+		return page(page, new LambdaQueryWrapper<SysRole>().like(
+				!StringUtils.isEmpty(name),
+				SysRole::getName,
+				name
+		));
 	}
 }

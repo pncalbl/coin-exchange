@@ -11,12 +11,9 @@ import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
-
-import java.util.Date;
 
 /**
  * @author pncalbl
@@ -58,11 +55,6 @@ public class SysPrivilegeController {
 	)
 	@PreAuthorize("hasAuthority('sys_privilege_create')")
 	public R add(@RequestBody @Validated SysPrivilege sysPrivilege) {
-		// 新增时，我们需要给我们的新增对象填充一些属性
-		String userIdStr = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
-		sysPrivilege.setCreateBy(Long.valueOf(userIdStr));
-		sysPrivilege.setCreated(new Date());
-		sysPrivilege.setLastUpdateTime(new Date());
 		boolean save = sysPrivilegeService.save(sysPrivilege);
 		if (save) {
 			return R.ok("新增成功");
@@ -79,10 +71,6 @@ public class SysPrivilegeController {
 	)
 	@PreAuthorize("hasAuthority('sys_privilege_update')")
 	public R update(@RequestBody @Validated SysPrivilege sysPrivilege) {
-		// 新增时，我们需要给我们的新增对象填充一些属性
-		String userIdStr = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
-		sysPrivilege.setModifyBy(Long.valueOf(userIdStr));
-		sysPrivilege.setLastUpdateTime(new Date());
 		boolean update = sysPrivilegeService.updateById(sysPrivilege);
 		if (update) {
 			return R.ok("修改成功");

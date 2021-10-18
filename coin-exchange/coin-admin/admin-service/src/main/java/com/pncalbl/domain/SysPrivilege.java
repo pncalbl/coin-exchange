@@ -1,9 +1,6 @@
 package com.pncalbl.domain;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.*;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
@@ -60,38 +57,38 @@ public class SysPrivilege {
 	private String description;
 
 	@TableField(value = "url")
-	@ApiModelProperty(value = "")
+	@ApiModelProperty(value = "url")
 	private String url;
 
 	@TableField(value = "`method`")
-	@ApiModelProperty(value = "")
+	@ApiModelProperty(value = "method")
 	private String method;
 
 	/**
 	 * 创建人
 	 */
-	@TableField(value = "create_by")
+	@TableField(value = "create_by", fill = FieldFill.INSERT)
 	@ApiModelProperty(value = "创建人")
 	private Long createBy;
 
 	/**
 	 * 修改人
 	 */
-	@TableField(value = "modify_by")
+	@TableField(value = "modify_by", fill = FieldFill.UPDATE)
 	@ApiModelProperty(value = "修改人")
 	private Long modifyBy;
 
 	/**
 	 * 创建时间
 	 */
-	@TableField(value = "created")
+	@TableField(value = "created", fill = FieldFill.INSERT)
 	@ApiModelProperty(value = "创建时间")
 	private Date created;
 
 	/**
 	 * 修改时间
 	 */
-	@TableField(value = "last_update_time")
+	@TableField(value = "last_update_time", fill = FieldFill.UPDATE)
 	@ApiModelProperty(value = "修改时间")
 	private Date lastUpdateTime;
 }

@@ -21,9 +21,9 @@ public class AutoFillHandler implements MetaObjectHandler {
 	/**
 	 * 插入元对象字段填充（用于插入时对公共字段的填充）
 	 * 新增数据时要添加的为：
-	 * 1 创建人
-	 * 2 创建时间
-	 * 3 lastupdatetime
+	 * 1. 创建人
+	 * 2. 创建时间
+	 * 3. lastUpdateTime
 	 *
 	 * @param metaObject 元对象
 	 */
@@ -38,8 +38,8 @@ public class AutoFillHandler implements MetaObjectHandler {
 
 	/**
 	 * 更新元对象字段填充（用于更新时对公共字段的填充）
-	 * //1 修改人
-	 * // 2 修改时间
+	 * 1. 修改人
+	 * 2. 修改时间
 	 *
 	 * @param metaObject 元对象
 	 */
@@ -54,13 +54,13 @@ public class AutoFillHandler implements MetaObjectHandler {
 	/**
 	 * 获取当前操作的用户对象
 	 *
-	 * @return 用户对象
+	 * @return 用户 id
 	 */
 	private Long getCurrentUserId() {
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication(); // 从安全的上下文里面获取用户的ud
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication(); // 从安全的上下文里面获取用户的 userId
 		if (authentication != null) {
 			String s = authentication.getPrincipal().toString(); // userId ->Long  anonymousUser
-			if ("anonymousUser".equals(s)) { //是因为用户没有登录访问时,就是这个用户
+			if ("anonymousUser".equals(s)) { // 是因为用户没有登录访问时,就是这个用户
 				return null;
 			}
 			return Long.valueOf(s);

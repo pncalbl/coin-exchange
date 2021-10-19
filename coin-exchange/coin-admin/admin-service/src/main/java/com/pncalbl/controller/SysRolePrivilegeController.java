@@ -24,7 +24,7 @@ import java.util.List;
  **/
 @RestController
 @RequiredArgsConstructor
-@Api(tags = "角色权限的配置")
+@Api(tags = "后台: 角色权限的配置")
 public class SysRolePrivilegeController {
 
 	private final SysRolePrivilegeService sysRolePrivilegeService;

@@ -21,7 +21,6 @@ import com.pncalbl.service.NoticeService;
  * @description ${TAGES}
  **/
 @Service
-@RequiredArgsConstructor
 public class NoticeServiceImpl extends ServiceImpl<NoticeMapper, Notice> implements NoticeService {
 
 	/**

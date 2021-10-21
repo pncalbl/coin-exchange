@@ -27,7 +27,7 @@ import springfox.documentation.annotations.ApiIgnore;
 
 @RestController
 @RequiredArgsConstructor
-@Api(tags = "后台: 客户工单")
+@Api(tags = "后台: 客户工单管理")
 @RequestMapping("/workIssues")
 public class WorkIssueController {
 

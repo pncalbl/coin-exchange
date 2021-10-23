@@ -3,6 +3,7 @@ package com.pncalbl.controller;
 import com.baomidou.mybatisplus.core.metadata.OrderItem;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.pncalbl.domain.User;
+import com.pncalbl.domain.UserAddress;
 import com.pncalbl.model.R;
 import com.pncalbl.service.UserService;
 import io.swagger.annotations.Api;
@@ -99,5 +100,22 @@ public class UserController {
 		User user = userService.getById(id);
 		return R.ok(user);
 	}
+
+
+	@ApiOperation(value = "查询用户的邀请列表")
+	@GetMapping("/directInvites")
+	@ApiImplicitParams(
+			{
+					@ApiImplicitParam(name = "current", value = "当前页"),
+					@ApiImplicitParam(name = "size", value = "每页显示的大小"),
+					@ApiImplicitParam(name = "userId", value = "用户 userId"),
+			}
+	)
+	@PreAuthorize("hasAuthority('user_query')")
+	public R<Page<User>> getDirectInvites(@ApiIgnore Page<User> page, Long userId) {
+		Page<User> userPage = userService.findDirectInvitesByPage(page, userId);
+		return R.ok(userPage);
+	}
+
 
 }

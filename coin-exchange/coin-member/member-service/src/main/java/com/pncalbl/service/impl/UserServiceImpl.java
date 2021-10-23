@@ -18,7 +18,7 @@ import org.springframework.util.StringUtils;
  * @author pncalbl
  * @date 2021/10/21 20:01
  * @e-mail pncalbl@qq.com
- * @description  用户管理服务实现类
+ * @description 用户管理服务实现类
  **/
 @Service
 public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService {
@@ -46,5 +46,18 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 				.eq(status != null, User::getStatus, status)
 				.eq(reviewStatus != null, User::getReviewsStatus, reviewStatus)
 		);
+	}
+
+	/**
+	 * 条件分页查询 - 用户邀请列表
+	 *
+	 * @param page   分页参数
+	 * @param userId 用户 id
+	 * @return 分页数据
+	 */
+	@Override
+	public Page<User> findDirectInvitesByPage(Page<User> page, Long userId) {
+		return page(page, new LambdaQueryWrapper<User>()
+				.eq(User::getDirectInviteid, userId));
 	}
 }

@@ -2,7 +2,6 @@ package com.pncalbl.controller;
 
 import com.baomidou.mybatisplus.core.metadata.OrderItem;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.pncalbl.domain.User;
 import com.pncalbl.domain.UserBank;
 import com.pncalbl.model.R;
 import com.pncalbl.service.UserBankService;

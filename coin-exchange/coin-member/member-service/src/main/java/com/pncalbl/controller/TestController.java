@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
  **/
 
 @RestController
-@Api(tags = "会员管理系统的测试")
+@Api(tags = "会员: 管理系统的测试")
 public class TestController {
 
 	@GetMapping("/test")

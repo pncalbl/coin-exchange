@@ -180,4 +180,23 @@ public class UserController {
 		return R.ok(new UseAuthInfoVo(user, userAuthInfoList, userAuthAuditRecords));
 	}
 
+	@ApiOperation(value = "修改用户的审核状态")
+	@PostMapping("/auths/status")
+	@ApiImplicitParams({
+			@ApiImplicitParam(name = "id", value = "用户的Id"),
+			@ApiImplicitParam(name = "authStatus", value = "审核状态"),
+			@ApiImplicitParam(name = "authCode", value = "一组认证图片的唯一标识"),
+			@ApiImplicitParam(name = "remark", value = "审核拒绝原因"),
+	})
+	@PreAuthorize("hasAuthority('user_auth_audit')")
+	public R updateUserAuthStatus(@RequestParam() Long id,
+	                              @RequestParam() Integer authStatus,
+	                              @RequestParam() Long authCode,
+	                              String remark) {
+		// 1. 修改 user 中的 reviewCode
+		// 2. 在 authAuditRecord 中添加一条记录
+		userService.updateUserAuthStatus(id, authStatus, authCode, remark);
+		return R.ok();
+	}
+
 }

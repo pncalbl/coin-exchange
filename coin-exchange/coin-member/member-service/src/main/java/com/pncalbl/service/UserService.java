@@ -37,4 +37,14 @@ public interface UserService extends IService<User> {
 	 * @return 分页数据
 	 */
 	Page<User> findDirectInvitesByPage(Page<User> page, Long userId);
+
+	/**
+	 * 修改用户的审核状态
+	 *
+	 * @param id         用户的Id
+	 * @param authStatus 审核状态
+	 * @param authCode   一组认证图片的唯一标识
+	 * @param remark     审核拒绝原因
+	 */
+	void updateUserAuthStatus(Long id, Integer authStatus, Long authCode, String remark);
 }

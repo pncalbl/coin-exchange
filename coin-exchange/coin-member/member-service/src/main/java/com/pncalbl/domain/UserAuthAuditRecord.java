@@ -1,9 +1,6 @@
 package com.pncalbl.domain;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.*;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
@@ -29,7 +26,7 @@ public class UserAuthAuditRecord {
 	/**
 	 * 主键
 	 */
-	@TableId(value = "id", type = IdType.INPUT)
+	@TableId(value = "id", type = IdType.ASSIGN_ID) // 采用  Mybatis 里面默认的 id生成器
 	@ApiModelProperty(value = "主键")
 	private Long id;
 
@@ -85,7 +82,7 @@ public class UserAuthAuditRecord {
 	/**
 	 * 创建时间
 	 */
-	@TableField(value = "created")
+	@TableField(value = "created", fill = FieldFill.INSERT)
 	@ApiModelProperty(value = "创建时间")
 	private Date created;
 }

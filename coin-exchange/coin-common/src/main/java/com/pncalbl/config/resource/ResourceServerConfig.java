@@ -1,5 +1,6 @@
 package com.pncalbl.config.resource;
 
+import com.alibaba.nacos.common.utils.HttpMethod;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -33,7 +34,13 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 		http.csrf().disable()
 				.sessionManagement().disable()
 				.authorizeRequests()
+				// .antMatchers(HttpMethod.OPTIONS)// 跨域请求会先进行一次options请求
+				// .permitAll()
 				.antMatchers(
+						"/users/setPassword",
+						"/users/register",
+						"/sms/sendTo",
+						"/gt/register",
 						"/login",           // 登录
 						"/v2/api-docs",
 						"/swagger-resources/configuration/ui", // 用来获取支持的动作

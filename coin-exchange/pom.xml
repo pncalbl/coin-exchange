@@ -41,7 +41,9 @@
 		<okio.version>1.15.0</okio.version>
 		<hutool.version>5.4.4</hutool.version>
 		<swagger2.version>2.9.2</swagger2.version>
-		
+		<javax-servlet.version>3.1.0</javax-servlet.version>
+		<org-json.version>20190722</org-json.version>
+	
 	</properties>
 	
 	<dependencies>
@@ -204,6 +206,16 @@
 				<artifactId>aliyun-java-sdk-dm</artifactId>
 				<version>${aliyun-java-sdk-dm.version}</version>
 			</dependency>
+			<dependency>
+				<groupId>org.json</groupId>
+				<artifactId>json</artifactId>
+				<version>${org-json.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>javax.servlet</groupId>
+				<artifactId>javax.servlet-api</artifactId>
+				<version>${javax-servlet.version}</version>
+			</dependency>
 		</dependencies>
 	</dependencyManagement>
 	
@@ -219,5 +231,5 @@
 		<module>match-engine</module>
 		<module>exchange-engine</module>
 	</modules>
-	
+
 </project>

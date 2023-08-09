@@ -8,3 +8,6 @@
 
 其他的服务，例如 yapi，sentinel，nacos，redis，mysql 跑在本地虚拟机中。
 
+
+
+![image-20230719110259675](D:\PNCA\Project\ProjectTraining\coin-exchange\coin-exchange\README\image-20230719110259675.png)

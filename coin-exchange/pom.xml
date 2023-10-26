@@ -42,7 +42,7 @@
 		<hutool.version>5.6.4</hutool.version>
 		<swagger2.version>2.9.2</swagger2.version>
 		<javax-servlet.version>3.1.0</javax-servlet.version>
-		<org-json.version>20190722</org-json.version>
+		<org-json.version>20231013</org-json.version>
 	
 	</properties>
 	
